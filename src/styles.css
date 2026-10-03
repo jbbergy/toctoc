@@ -1,0 +1,141 @@
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url('/fonts/bricolage-grotesque-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url('/fonts/figtree-latin.woff2') format('woff2');
+}
+
+:root {
+  --bg: #f2f3f8;
+  --surface: #ffffff;
+  --track: #e1e3ee;
+  --line: #e6e8f0;
+  --ink: #1a1c2b;
+  --muted: #5a5e72; /* 5,8:1 sur --bg, 6,4:1 sur blanc */
+  --muted-strong: #4a4e63; /* libellés inactifs sur --track : 6,4:1 */
+  --coup: #3a4bc0; /* blanc dessus : 7,1:1 */
+  --coup-tint: rgb(223 226 245);
+  --contr: #c4500f; /* blanc dessus : 4,7:1 */
+  --contr-tint: rgb(246 227 217);
+  --focus: #1a1c2b;
+
+  --font-body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Bricolage Grotesque', var(--font-body);
+  --gutter: clamp(1rem, 6vw, 1.5rem);
+  --radius-card: 1.25rem;
+
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+body {
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+p,
+ul,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+a {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  /* Bordure transparente : visible en mode contraste forcé. */
+  border: 2px solid transparent;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-loading,
+.app-error {
+  margin: auto;
+  padding: var(--gutter);
+  text-align: center;
+  color: var(--muted);
+}
+
+.app-error {
+  color: #9b1c1c;
+  font-weight: 700;
+}
+
+.num {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

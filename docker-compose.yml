@@ -1,0 +1,17 @@
+# Production sur jibhey.fr : le conteneur rejoint le réseau « infra » du Postgres partagé
+# (/srv/postgres) et n'écoute qu'en local ; Caddy publie toctoc.jibhey.fr en HTTPS.
+services:
+  app:
+    build: .
+    image: toctoc
+    container_name: toctoc
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "127.0.0.1:4321:3000"
+    networks:
+      - infra
+
+networks:
+  infra:
+    external: true

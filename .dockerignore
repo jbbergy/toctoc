@@ -1,0 +1,15 @@
+.git
+.claude
+node_modules
+dist
+dev-dist
+tests
+server/node_modules
+server/test
+server/scripts
+server/.dev-pgdata
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
