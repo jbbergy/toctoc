@@ -116,3 +116,31 @@ export function groupHistory(events: TrackedEvent[], filter: Filter, now: number
     return { ...g, summary: parts.join(' · ') }
   })
 }
+
+export interface DayCount {
+  key: string
+  /** Minuit (heure locale) du jour. */
+  t: number
+  count: number
+}
+
+/** Nombre de coups par jour sur les `days` derniers jours, du plus ancien à aujourd'hui. */
+export function dailyCoups(events: TrackedEvent[], days: number, now: number): DayCount[] {
+  const out: DayCount[] = []
+  const index = new Map<string, DayCount>()
+  const d = new Date(now)
+  d.setHours(0, 0, 0, 0)
+  d.setDate(d.getDate() - (days - 1))
+  for (let i = 0; i < days; i++) {
+    const c = { key: dayKey(d.getTime()), t: d.getTime(), count: 0 }
+    out.push(c)
+    index.set(c.key, c)
+    d.setDate(d.getDate() + 1)
+  }
+  for (const e of events) {
+    if (e.kind !== 'coup') continue
+    const c = index.get(dayKey(e.t))
+    if (c) c.count++
+  }
+  return out
+}

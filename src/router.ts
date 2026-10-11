@@ -11,6 +11,12 @@ export const router = createRouter({
       component: () => import('./views/HistoryView.vue'),
       meta: { title: 'Historique' },
     },
+    {
+      path: '/historique/graphique',
+      name: 'chart',
+      component: () => import('./views/ChartView.vue'),
+      meta: { title: 'Évolution des coups' },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
 })

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ago, dayLabel, fmtDur, groupHistory } from '../src/lib/format'
+import { ago, dailyCoups, dayLabel, fmtDur, groupHistory } from '../src/lib/format'
 import type { TrackedEvent } from '../src/db/types'
 
 const M = 60_000
@@ -56,5 +56,21 @@ describe('groupHistory', () => {
   it('filtre par type', () => {
     const g = groupHistory(events, 'coups', now)
     expect(g.flatMap((x) => x.items).every((i) => i.kind === 'coup')).toBe(true)
+  })
+})
+
+describe('dailyCoups', () => {
+  it('compte les coups par jour, jours vides inclus', () => {
+    const events: TrackedEvent[] = [
+      { id: 'a', kind: 'coup', t: now - 5 * M, durationMs: 0 },
+      { id: 'b', kind: 'coup', t: now - 60 * M, durationMs: 0 },
+      { id: 'c', kind: 'contraction', t: now - 30 * M, durationMs: 0 },
+      { id: 'd', kind: 'coup', t: new Date(2026, 9, 1, 9).getTime(), durationMs: 0 },
+      { id: 'e', kind: 'coup', t: new Date(2026, 8, 1, 9).getTime(), durationMs: 0 },
+    ]
+    const days = dailyCoups(events, 3, now)
+    expect(days.map((d) => d.count)).toEqual([1, 0, 2])
+    expect(days[0].t).toBe(new Date(2026, 9, 1).getTime())
+    expect(days[2].t).toBe(new Date(2026, 9, 3).getTime())
   })
 })

@@ -71,10 +71,16 @@ onMounted(() => {
 
     <SegmentedControl v-model="filter" label="Filtrer l’historique" :options="filterOptions" />
 
-    <button type="button" class="add" aria-haspopup="dialog" @click="openAdd">
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" /></svg>
-      <span>Ajouter une entrée</span>
-    </button>
+    <div class="actions">
+      <button type="button" class="action" aria-haspopup="dialog" @click="openAdd">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" /></svg>
+        <span>Ajouter une entrée</span>
+      </button>
+      <RouterLink to="/historique/graphique" class="action">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 20V12M12 20V5M19 20v-9" /></svg>
+        <span>Graphique des coups</span>
+      </RouterLink>
+    </div>
 
     <p v-if="!groups.length" class="empty">
       Rien pour l’instant. Ce que vous enregistrez apparaîtra ici.
@@ -160,7 +166,13 @@ onMounted(() => {
   stroke-linejoin: round;
 }
 
-.add {
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.action {
+  flex: 1 1 12rem;
   min-height: 3rem;
   padding: 0.5rem 1.25rem;
   border-radius: 999px;
@@ -171,8 +183,9 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  text-decoration: none;
 }
-.add svg {
+.action svg {
   flex: none;
   width: 1.25rem;
   height: 1.25rem;
